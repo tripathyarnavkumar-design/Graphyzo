@@ -822,11 +822,10 @@ body.rail-out .pane.enter>*{animation-name:fadeIn}
 .marq-row[data-dir="r"] .marq-track{animation-direction:reverse;animation-duration:230s}
 @keyframes marq{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 5px))}}
 .marq-box:hover .marq-track,.marq-box:focus-within .marq-track{animation-play-state:paused}
-.mq{flex:none;width:132px;border:0;background:none;padding:0;cursor:pointer;display:flex;flex-direction:column;gap:5px;text-align:left;color:var(--ink)}
+.mq{flex:none;width:132px;border:0;background:none;padding:0;cursor:default;display:flex;flex-direction:column;gap:5px;text-align:left;color:var(--ink)}
 .mq .th{display:block;width:132px;height:78px;background:#fff;outline:1px solid var(--rule);outline-offset:-1px;overflow:hidden;transition:outline-color .15s ease}
 .mq .th svg{width:100%;height:100%;display:block}
 .mq .nm{font-size:11.5px;font-weight:600;line-height:1.25;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media (hover:hover) and (pointer:fine){ .mq:hover .th{outline:2px solid var(--red);outline-offset:-2px} .mq:hover .nm{color:var(--ink)} }
 @media (prefers-reduced-motion:reduce){ .marq-track{animation:none!important} .marq-row{overflow-x:auto} }
 @media (max-width:860px){ .mq,.mq .th{width:112px} .mq .th{height:66px} .marq-h{font-size:14px} }
 /* Landing fits one laptop screen: shorter A/B cards, tighter rhythm */
@@ -1558,6 +1557,40 @@ html:not([data-dvn-ready="1"]) body{opacity:0;animation:dvnShow 0s 4s forwards}
 html[data-dvn-ready="1"] body{animation:fadeIn .22s ease-out}
 @keyframes dvnShow{to{opacity:1}}
 
+/* ---------- Catalogue of every technique (look only) ---------- */
+.marq-h:has(.marq-link){display:flex;justify-content:space-between;align-items:baseline;gap:4px 16px;flex-wrap:wrap}
+.marq-link{flex:none;padding:0;border:0;background:none;font:600 15px/1.4 var(--face);color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-decoration-thickness:1.5px;text-underline-offset:3px;cursor:pointer;white-space:nowrap}
+.marq-link:hover{color:var(--red-ink)}
+.marq-link:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.cat-scrim{z-index:64}
+body.cat-open{overflow:hidden}
+.catdlg{position:fixed;z-index:65;left:50%;top:50%;transform:translate(-50%,-50%);width:min(1120px,calc(100vw - 32px));height:min(860px,calc(100dvh - 32px));display:flex;flex-direction:column;background:var(--paper);border:1px solid var(--ink);box-shadow:0 24px 64px rgba(0,0,0,.24);animation:bdIn .24s cubic-bezier(.23,1,.32,1)}
+.catdlg[hidden]{display:none}
+.cat-h{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding:22px 24px 18px;border-bottom:1px solid var(--ink)}
+.cat-ht{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;min-width:0}
+.cat-ht h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em;flex:none}
+.cat-ht p{margin:0;flex:1 1 420px;max-width:78ch;font-size:15px;line-height:1.5;color:var(--ink-2)}
+.cat-x{flex:none}
+.cat-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px 0}
+.cat-tabs{display:flex;border:1px solid var(--ink)}
+.cat-tabs button{height:36px;padding:0 16px;border:0;border-left:1px solid var(--ink);background:var(--paper);font:700 14px/1 var(--face);color:var(--ink);cursor:pointer}
+.cat-tabs button:first-child{border-left:0}
+.cat-tabs button span{font:500 12px/1 var(--mono);color:var(--ink-3);margin-left:4px}
+.cat-tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}.cat-tabs button[aria-selected="true"] span{color:#C7D2FE}
+.cat-tabs button[hidden]{display:none}
+.cat-q input{width:260px;height:36px;padding:0 10px;border:1px solid var(--rule);font:400 15px/1 var(--face);color:var(--ink);background:var(--paper)}
+.cat-q input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.cat-tip{margin:10px 24px 0;font-size:15px;color:var(--ink-3)}
+.cat-b{flex:1;min-height:0;overflow:auto;padding:14px 24px 28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px 12px;align-content:start}
+.cat-it{display:flex;flex-direction:column;gap:4px;min-width:0;cursor:default;outline:none}
+.cat-it .th{display:block;aspect-ratio:132/80;background:#fff;outline:1px solid var(--rule);outline-offset:-1px;overflow:hidden}
+.cat-it .th svg{width:100%;height:100%;display:block}
+.cat-it .nm{font-size:13.5px;font-weight:600;line-height:1.3;color:var(--ink)}
+.cat-it .fn{font-size:12px;line-height:1.3;color:var(--ink-3)}
+.cat-it:hover .th,.cat-it:focus-visible .th{outline:1.5px solid var(--ink);outline-offset:-1.5px}
+.cat-none{grid-column:1/-1;margin:24px 0;font-size:15px;color:var(--ink-3)}
+@media (max-width:760px){ .cat-h{padding:16px} .cat-ht p{flex-basis:100%} .cat-bar{flex-wrap:wrap;padding:12px 16px 0} .cat-q,.cat-q input{width:100%} .cat-tip{margin:8px 16px 0} .cat-b{padding:12px 16px 20px;grid-template-columns:repeat(auto-fill,minmax(130px,1fr))} }
+
 /* ---------- 3D preview: 2D / 3D switch on Pick a chart ---------- */
 .dimbar{display:flex;align-items:center;gap:10px 16px;flex-wrap:wrap;margin:0 0 18px}
 .dimbar-l{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
@@ -1699,8 +1732,8 @@ body.show-grid .pick.split::before{opacity:1}
               <g class="c-axis"><path d="M146 108h86M146 16v92"/><path class="c-grid" d="M146 80h86M146 52h86M146 24h86"/></g>
               <g class="c-bars"><rect style="--i:0" x="152" y="70" width="11" height="38"/><rect style="--i:1" x="167" y="44" width="11" height="64"/><rect style="--i:2" x="182" y="82" width="11" height="26"/><rect style="--i:3" class="hot" x="197" y="26" width="11" height="82"/><rect style="--i:4" x="212" y="58" width="11" height="50"/></g>
             </svg>
-            <b class="opt-t">Start with your data</b>
-            <span class="opt-d" id="optAd">Upload or paste a table. The charts that fit it are suggested for you.</span>
+            <b class="opt-t">Start with a dataset</b>
+            <span class="opt-d" id="optAd">Upload or paste a dataset or use an example dataset from our list, and the charts that fit the dataset will be suggested to you, along with other visualization options.</span>
             <span class="opt-m">CSV · TSV · JSON · Excel <span class="opt-go">Start<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span></span>
           </button>
         </div>
@@ -1708,7 +1741,7 @@ body.show-grid .pick.split::before{opacity:1}
         </div>
         <div class="split-r">
         <section class="marq" id="marq" aria-labelledby="marqH">
-          <p class="marq-h" id="marqH">Visualize your data with <b><span id="marqN">115</span>+ visualization techniques</b></p>
+          <p class="marq-h" id="marqH"><span>Visualize your data with <b><span id="marqN">115</span>+ visualization techniques</b></span> <button type="button" class="marq-link" id="catOpen" aria-haspopup="dialog">See catalogue</button></p>
           <div class="marq-box" id="marqBox"><div class="marq-row" data-dir="l"><div class="marq-track"></div></div><div class="marq-row" data-dir="r"><div class="marq-track"></div></div><div class="marq-row" data-dir="l"><div class="marq-track"></div></div></div>
         </section>
         </div>
@@ -1993,6 +2026,16 @@ body.show-grid .pick.split::before{opacity:1}
 
 <div class="peek" id="peek" hidden aria-hidden="true"><div class="peek-fig" id="peekFig"></div><div class="peek-body"><div class="peek-top"><b id="peekName"></b><span id="peekBadge" class="tag"></span></div><p id="peekDesc"></p><p class="peek-need" id="peekNeed"></p></div></div>
 <div class="toast" id="toast" role="status" hidden></div>
+<div class="scrim cat-scrim" id="catScrim" hidden></div>
+<div class="catdlg" id="catDlg" role="dialog" aria-modal="true" aria-labelledby="catH" hidden>
+  <div class="cat-h">
+    <div class="cat-ht"><h2 id="catH">Catalogue</h2><p>These visualizations are available on Graphyzo. To use them, upload or paste a dataset or select an example dataset from our list, and the charts that fit the dataset will be suggested to you, along with other visualization options.</p></div>
+    <button type="button" class="icon-btn cat-x" id="catClose" aria-label="Close the catalogue"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+  </div>
+  <div class="cat-bar"><div class="cat-tabs" role="tablist" aria-label="Kind of visualization"><button type="button" role="tab" data-cat="2d" aria-selected="true">2D <span id="catN2"></span></button><button type="button" role="tab" data-cat="3d" aria-selected="false">3D <span id="catN3"></span></button></div><label class="cat-q"><span class="vh">Search the catalogue</span><input type="search" id="catQ" placeholder="Search, e.g. donut"></label></div>
+  <p class="cat-tip">Hover over a visualization to see it larger.</p>
+  <div class="cat-b" id="catBody" role="list"></div>
+</div>
 <div class="tooltip" id="tooltip" hidden></div>
 
 <!-- Chart chooser sheet -->
@@ -5144,16 +5187,40 @@ function bindSheetRange(){ const g=$('#seGrid'), w=$('#seWrap'); let drag=false;
 function buildMarquee(){ const box=$('#marqBox'); if(!box || box.dataset.built) return; box.dataset.built='1';
   $('#marqN').textContent = Math.floor(ORDER.length/5)*5; if ($('#heroN')) $('#heroN').textContent = Math.floor(ORDER.length/5)*5+'+';
   const ids=ORDER.slice(), nR=Math.max(1,$$('#marqBox .marq-track').length), per0=Math.ceil(ids.length/nR), rows=d3.range(nR).map(r=>ids.slice(r*per0,(r+1)*per0));
-  const mk=rid=>{ const b=document.createElement('button'); b.type='button'; b.className='mq'; b.dataset.rid=rid; b.title=RINFO[rid].name; b.setAttribute('aria-label', `${RINFO[rid].name}: start with this chart`);
+  const mk=rid=>{ const b=document.createElement('div'); b.className='mq'; b.dataset.rid=rid; b.setAttribute('role','img'); b.setAttribute('aria-label', RINFO[rid].name);
     b.innerHTML=`<span class="th"></span><span class="nm">${esc(RINFO[rid].name)}</span>`; return b; };
   const tracks=$$('#marqBox .marq-track'); let queue=[];
-  rows.forEach((list,ri)=>{ const t=tracks[ri]; [0,1].forEach(copy=>list.forEach(rid=>{ const el=mk(rid); if(copy) { el.setAttribute('aria-hidden','true'); el.tabIndex=-1; } t.append(el); queue.push(el); })); });
+  rows.forEach((list,ri)=>{ const t=tracks[ri]; [0,1].forEach(copy=>list.forEach(rid=>{ const el=mk(rid); if(copy) el.setAttribute('aria-hidden','true'); t.append(el); queue.push(el); })); });
   /* draw the thumbnails in view straight away, so the strip arrives with the rest of the page; the hidden ones follow in small slices */
   const fill=el=>{ if (!el.firstChild.firstChild) el.firstChild.appendChild(thumbFor(el.dataset.rid).cloneNode(true)); };
   const per=Math.ceil((box.clientWidth||1000)/110)+1; rows.forEach((list,ri)=>{ const kids=tracks[ri].children; for (let j=0;j<Math.min(per,list.length);j++){ fill(kids[j]); fill(kids[list.length+j]); } });
   let i=0; const step=()=>{ const t0=performance.now(); while(i<queue.length && performance.now()-t0<12) fill(queue[i++]); if(i<queue.length) setTimeout(step,16); }; setTimeout(step,120);
-  box.addEventListener('click', e=>{ const b=e.target.closest('.mq'); if(!b) return; const rid=b.dataset.rid; setStartMode('data', $('#optA')); setTimeout(()=>{ openSheet(rid); }, 30); });
 }
+
+/* ---------- Catalogue: every technique, in 2D and in 3D; look only, hover for a larger preview ---------- */
+const CAT = {tab:'2d', built:{}, q:''};
+const cat3 = () => typeof R3!=='undefined' ? ORDER.filter(r=>R[r] && R3[r]) : [];
+function catName(rid, three){ return three && typeof NAME3!=='undefined' && NAME3[rid] ? NAME3[rid] : RINFO[rid].name; }
+function withDim(three, fn){ const keep=S.opts.dim; S.opts.dim = three ? '3d' : '2d'; try { return fn(); } finally { S.opts.dim=keep; } }
+function openCatalogue(){ const d=$('#catDlg'); d.hidden=false; $('#catScrim').hidden=false; document.body.classList.add('cat-open');
+  $('#catN2').textContent=ORDER.filter(r=>R[r]).length; const n3=cat3().length; $('#catN3').textContent=n3; $('.cat-tabs [data-cat="3d"]').hidden=!n3;
+  renderCatalogue(); setTimeout(()=>$('#catQ').focus(), 30); }
+function closeCatalogue(){ $('#catDlg').hidden=true; $('#catScrim').hidden=true; document.body.classList.remove('cat-open'); hidePeek(); $('#catOpen').focus(); }
+function renderCatalogue(){ const three=CAT.tab==='3d', q=CAT.q.trim().toLowerCase(), box=$('#catBody');
+  $$('.cat-tabs [data-cat]').forEach(b=>b.setAttribute('aria-selected', b.dataset.cat===CAT.tab));
+  const list=(three ? cat3() : ORDER.filter(r=>R[r])).filter(r=>!q || (catName(r,three)+' '+RINFO[r].name+' '+RINFO[r].aka.join(' ')).toLowerCase().includes(q));
+  box.innerHTML = list.length ? list.map(r=>`<div class="cat-it" role="listitem" tabindex="0" data-rid="${r}"><span class="th"></span><span class="nm">${esc(catName(r,three))}</span><span class="fn">${RINFO[r].fns.map(f=>FUNCS[f]).join(' · ')}</span></div>`).join('') : '<p class="cat-none">No visualization matches that search.</p>';
+  box.scrollTop=0; const els=[...box.querySelectorAll('.cat-it')]; let i=0;
+  const step=()=>{ const t0=performance.now(); while (i<els.length && performance.now()-t0<14) { const el=els[i++]; try { el.firstChild.append(withDim(three, ()=>thumbFor(el.dataset.rid)).cloneNode(true)); } catch(e){ console.error(e); } } if (i<els.length && !$('#catDlg').hidden) requestAnimationFrame(step); };
+  step(); }
+function bindCatalogue(){ const o=$('#catOpen'); if (!o) return; o.onclick=openCatalogue; $('#catClose').onclick=closeCatalogue; $('#catScrim').onclick=closeCatalogue;
+  $$('.cat-tabs [data-cat]').forEach(b=>b.onclick=()=>{ CAT.tab=b.dataset.cat; hidePeek(); renderCatalogue(); });
+  $('#catQ').oninput=e=>{ CAT.q=e.target.value; hidePeek(); renderCatalogue(); };
+  const body=$('#catBody'), peek=el=>{ const three=CAT.tab==='3d'; withDim(three, ()=>showPeek(el, el.dataset.rid)); if (three) $('#peekName').textContent=catName(el.dataset.rid, true); };
+  body.addEventListener('mouseover', e=>{ const el=e.target.closest('.cat-it'); if (el && peekFor!==el.dataset.rid) peek(el); });
+  body.addEventListener('mouseleave', hidePeek); body.addEventListener('focusin', e=>{ const el=e.target.closest('.cat-it'); if (el) peek(el); }); body.addEventListener('focusout', hidePeek);
+  body.addEventListener('scroll', hidePeek, {passive:true});
+  $('#catDlg').addEventListener('keydown', e=>{ if (e.key==='Escape') { e.stopPropagation(); closeCatalogue(); } }); }
 
 /* ---------- Start over: confirm, then discard everything ---------- */
 function hasWork(){ return S.dataChosen || S.stage==='work' || (SE.cells && seDims().R>0); }
@@ -5213,7 +5280,7 @@ function init(){
   $('#startEdit').onclick=()=>openSheet();
   $('#startChange').onclick=()=>{ S.reach=1; seSnap(); seReset(); seRender(); $('#fileInput2').value=''; S.dataChosen=false; renderStart(); renderGoals(); renderGallery(); save(); setTimeout(()=>$('#seGrid input')?.focus(),50); };
   $('#useExample').onclick=()=>{ const rid=FLOW.forChart; if(!rid) return; const k=R[rid].ex; if (setData(SAMPLES[k].csv,{name:SAMPLES[k].name,key:k,keepChart:true})) dataCommitted(); };
-  renderStartExamples(); buildMarquee();
+  renderStartExamples(); buildMarquee(); bindCatalogue();
   $('#closeDataModal').onclick=()=>closeDataModal(); $('#dataScrim').onclick=()=>closeDataModal();
   if (matchMedia('(max-width:860px)').matches) $$('#rail .fgroup').forEach((d,i)=>{ if(i>0) d.open=false; });
   $$('.opt').forEach(o=>o.onclick=()=>setStartMode(o.dataset.go, o));
