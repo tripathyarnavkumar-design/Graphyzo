@@ -1,0 +1,6 @@
+{
+  // Cloudflare Workers: publish the files in this folder as a static site.
+  "name": "graphyzo",
+  "compatibility_date": "2026-11-01",
+  "assets": { "directory": "./", "not_found_handling": "single-page-application" }
+}

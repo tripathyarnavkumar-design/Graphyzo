@@ -6,4 +6,4 @@ Everything runs in the browser. The whole tool is one self-contained file, `inde
 
 ## Publishing
 
-Cloudflare Pages is connected to this repository: every change pushed to `main` goes live at https://graphyzo.pages.dev/ automatically.
+Cloudflare Workers is connected to this repository (Workers Builds): every change pushed to `main` is published automatically. `wrangler.jsonc` tells Cloudflare to serve the files here as a static site; `.assetsignore` keeps the repository's own files out of it.
