@@ -6,4 +6,4 @@ Everything runs in the browser. The whole tool is one self-contained file, `inde
 
 ## Publishing
 
-Cloudflare Workers is connected to this repository (Workers Builds): every change pushed to `main` is published automatically. `wrangler.jsonc` tells Cloudflare to serve the files here as a static site; `.assetsignore` keeps the repository's own files out of it.
+Every push to `main` is published to Cloudflare Pages at https://graphyzo.pages.dev/ by the GitHub workflow in `.github/workflows/publish.yml`. It needs two repository secrets, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
