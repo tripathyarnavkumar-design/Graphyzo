@@ -1571,6 +1571,11 @@ body.cat-open{overflow:hidden}
 .cat-ht h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em;flex:none}
 .cat-ht p{margin:0;flex:1 1 420px;max-width:78ch;font-size:15px;line-height:1.5;color:var(--ink-2)}
 .cat-x{flex:none}
+.cat-act{display:flex;align-items:center;gap:10px;flex:none}
+.cat-go{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.cat-go svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;transition:transform .2s cubic-bezier(.23,1,.32,1)}
+@media (hover:hover) and (pointer:fine){ .cat-go:hover svg{transform:translateX(3px)} }
+@media (max-width:760px){ .cat-h{flex-wrap:wrap} .cat-act{order:-1;width:100%;justify-content:space-between} }
 .cat-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 24px 0}
 .cat-tabs{display:flex;border:1px solid var(--ink)}
 .cat-tabs button{height:36px;padding:0 16px;border:0;border-left:1px solid var(--ink);background:var(--paper);font:700 14px/1 var(--face);color:var(--ink);cursor:pointer}
@@ -2030,7 +2035,7 @@ body.show-grid .pick.split::before{opacity:1}
 <div class="catdlg" id="catDlg" role="dialog" aria-modal="true" aria-labelledby="catH" hidden>
   <div class="cat-h">
     <div class="cat-ht"><h2 id="catH">Catalogue</h2><p>These visualizations are available on Graphyzo. To use them, upload or paste a dataset or select an example dataset from our list, and the charts that fit the dataset will be suggested to you, along with other visualization options.</p></div>
-    <button type="button" class="icon-btn cat-x" id="catClose" aria-label="Close the catalogue"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+    <div class="cat-act"><button type="button" class="btn btn-red cat-go" id="catStart">Start with a dataset<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button><button type="button" class="icon-btn cat-x" id="catClose" aria-label="Close the catalogue"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
   </div>
   <div class="cat-bar"><div class="cat-tabs" role="tablist" aria-label="Kind of visualization"><button type="button" role="tab" data-cat="2d" aria-selected="true">2D <span id="catN2"></span></button><button type="button" role="tab" data-cat="3d" aria-selected="false">3D <span id="catN3"></span></button></div><label class="cat-q"><span class="vh">Search the catalogue</span><input type="search" id="catQ" placeholder="Search, e.g. donut"></label></div>
   <p class="cat-tip">Hover over a visualization to see it larger.</p>
@@ -5205,7 +5210,7 @@ function withDim(three, fn){ const keep=S.opts.dim; S.opts.dim = three ? '3d' : 
 function openCatalogue(){ const d=$('#catDlg'); d.hidden=false; $('#catScrim').hidden=false; document.body.classList.add('cat-open');
   $('#catN2').textContent=ORDER.filter(r=>R[r]).length; const n3=cat3().length; $('#catN3').textContent=n3; $('.cat-tabs [data-cat="3d"]').hidden=!n3;
   renderCatalogue(); setTimeout(()=>$('#catQ').focus(), 30); }
-function closeCatalogue(){ $('#catDlg').hidden=true; $('#catScrim').hidden=true; document.body.classList.remove('cat-open'); hidePeek(); $('#catOpen').focus(); }
+function closeCatalogue(refocus=true){ $('#catDlg').hidden=true; $('#catScrim').hidden=true; document.body.classList.remove('cat-open'); hidePeek(); if (refocus) $('#catOpen').focus(); }
 function renderCatalogue(){ const three=CAT.tab==='3d', q=CAT.q.trim().toLowerCase(), box=$('#catBody');
   $$('.cat-tabs [data-cat]').forEach(b=>b.setAttribute('aria-selected', b.dataset.cat===CAT.tab));
   const list=(three ? cat3() : ORDER.filter(r=>R[r])).filter(r=>!q || (catName(r,three)+' '+RINFO[r].name+' '+RINFO[r].aka.join(' ')).toLowerCase().includes(q));
@@ -5213,7 +5218,8 @@ function renderCatalogue(){ const three=CAT.tab==='3d', q=CAT.q.trim().toLowerCa
   box.scrollTop=0; const els=[...box.querySelectorAll('.cat-it')]; let i=0;
   const step=()=>{ const t0=performance.now(); while (i<els.length && performance.now()-t0<14) { const el=els[i++]; try { el.firstChild.append(withDim(three, ()=>thumbFor(el.dataset.rid)).cloneNode(true)); } catch(e){ console.error(e); } } if (i<els.length && !$('#catDlg').hidden) requestAnimationFrame(step); };
   step(); }
-function bindCatalogue(){ const o=$('#catOpen'); if (!o) return; o.onclick=openCatalogue; $('#catClose').onclick=closeCatalogue; $('#catScrim').onclick=closeCatalogue;
+function bindCatalogue(){ const o=$('#catOpen'); if (!o) return; o.onclick=openCatalogue; $('#catClose').onclick=()=>closeCatalogue(); $('#catScrim').onclick=()=>closeCatalogue();
+  $('#catStart').onclick=()=>{ closeCatalogue(false); setStartMode('data', $('#optA')); };
   $$('.cat-tabs [data-cat]').forEach(b=>b.onclick=()=>{ CAT.tab=b.dataset.cat; hidePeek(); renderCatalogue(); });
   $('#catQ').oninput=e=>{ CAT.q=e.target.value; hidePeek(); renderCatalogue(); };
   const body=$('#catBody'), peek=el=>{ const three=CAT.tab==='3d'; withDim(three, ()=>showPeek(el, el.dataset.rid)); if (three) $('#peekName').textContent=catName(el.dataset.rid, true); };
